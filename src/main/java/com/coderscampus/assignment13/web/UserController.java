@@ -37,7 +37,7 @@ public class UserController {
 	@GetMapping("/users")
 	public String getAllUsers (ModelMap model) {
 		Set<User> users = userService.findAll();
-		
+
 		model.put("users", users);
 		if (users.size() == 1) {
 			model.put("user", users.iterator().next());
@@ -51,6 +51,8 @@ public class UserController {
 		User user = userService.findById(userId);
 		model.put("users", Arrays.asList(user));
 		model.put("user", user);
+		model.put("address", user.getAddress());
+		model.put("accounts", user.getAccounts());
 		return "users";
 	}
 	

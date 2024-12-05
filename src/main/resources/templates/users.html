@@ -17,8 +17,7 @@
 		<div>
 			Full Name: <input type="text" th:field="${user.name}" />
 		</div>
-		<hr>
-		<!-- Editable Address -->
+		<hr/>
 		<div>
 			Address Line 1: <input type="text" th:field="${user.address.addressLine1}" />
 		</div>
@@ -45,29 +44,29 @@
 	<form th:action="@{/users/{userId}/delete(userId=${user.userId})}" method="post">
 		<input type="submit" value="Delete User Account" />
 	</form>
-	<hr>
-<h2>Accounts</h2>
-	
-</div>
-
-<!-- If there are multiple users -->
-<div th:unless="${#lists.size(users) == 1}">
-	<div th:each="user : ${users}">
-		<!-- Clickable User ID -->
-		<a th:href="@{/users/{userId}(userId=${user.userId})}">
-			<u th:text="${user.userId}"></u>
-		</a><br/>
-		<!-- Other User Details -->
-		<span th:text="'Username: ' + ${user.username}"></span><br/>
-		<span th:text="'Full Name: ' + ${user.name}"></span><br/>
-		<span th:text="'Password: ' + ${user.password}"></span><br/>
+	<hr/>
+	<form th:action="@{/users/{userId}/accounts(userId=${user.userId})}" method="post">
+		<h3>Accounts</h3>
 		<div th:each="account : ${user.accounts}">
-			<!-- Clickable Account Name -->
-			<a th:href="@{/users/{userId}/accounts/{accountId}(userId=${user.userId}, accountId=${account.accountId})}"
-			   th:text="${account.accountName}"></a><br/>
+			<a th:href="@{/users/{userId}/accounts/{accountId}(userId=${user.userId},accountId=${account.accountId})}" th:text="${account.accountName}"></a>
 		</div>
-		<hr/>
+		<input style="margin-top: 1em;" type="submit" value="Create New Bank Account"/>
+	</form>
+	<div style="margin-top: 1em;">
+		<a href="/users">Back</a>
 	</div>
 </div>
+
+<div th:unless="${#lists.size(users) == 1}" th:each="user : ${users}">
+	<a th:href="@{/users/{userId}(userId=${user.userId})}" th:text="${user.userId}"></a><br/>
+	<span th:text="${user.username}"></span><br/>
+	<span th:text="${user.name}"></span><br/>
+	<span th:text="${user.password}"></span>
+	<div th:each="account : ${user.accounts}">
+		<a th:href="@{/users/{userId}/accounts/{accountId}(userId=${user.userId},accountId=${account.accountId})}" th:text="${account.accountName}"></a>
+	</div>
+	<hr/>
+</div>
+
 </body>
 </html>

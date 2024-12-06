@@ -70,7 +70,7 @@ public class UserService {
 		}
 		return userRepo.save(user);
 	}
-	public Account saveAccount(Long userId,Account account){
+	public Account saveAccount(Account account){
 		return accountRepo.save(account);
 	}
 

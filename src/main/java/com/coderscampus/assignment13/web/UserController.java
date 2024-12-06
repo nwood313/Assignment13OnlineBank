@@ -1,6 +1,7 @@
 package com.coderscampus.assignment13.web;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -30,6 +31,7 @@ public class UserController {
 		
 		return "register";
 	}
+
 	
 	@PostMapping("/register")
 	public String postCreateUser (User user) {
@@ -68,7 +70,12 @@ public class UserController {
 	@PostMapping("/users/{userId}")
 	public String postOneUser (User user, @ModelAttribute Address address) {
 		user.setAddress(address);
-
+		if (user.getAddress()!=null) {
+			user.getAddress().setUser(user);
+		}
+		for (Account account : user.getAccounts()) {
+			account.setUsers((Collections.singletonList(user)));
+		}
 		userService.saveUser(user);
 		return "redirect:/users/"+user.getUserId();
 	}
@@ -78,9 +85,23 @@ public class UserController {
 		userService.delete(userId);
 		return "redirect:/users";
 	}
-	
+
+	@PostMapping("/users/{userId}/accounts")
+	public String PostNewAccount (@PathVariable Long userId, @ModelAttribute Account account) {
+
+		User user = userService.findById(userId);
+		if (account.getAccountId()==null) {
+			account.setUsers(Collections.singletonList(user));
+			user.getAccounts().add(account);
+		}
+
+		Account newAccount = userService.saveAccount(account);
+
+		return "redirect:/users/" + userId +"/accounts/" + new Account().getAccountId();
+	}
+
 	@GetMapping("/users/{userId}/accounts/{accountId}")
-	public String getOneAccount (ModelMap model, User user, @PathVariable Long accountId) {
+	public String getOneAccount (ModelMap model, @PathVariable Long accountId, @PathVariable Long userId) {
 
 		User user = userService.findById(userId);
 		model.put("user", user);
@@ -90,10 +111,11 @@ public class UserController {
 
 		return "account";
 	}
-	@PostMapping("users/{userId}/accounts/{accountId}")
-	public String postOneAccount (@PathVariable Account account){
+	@GetMapping("/users/{userId}/accounts/{accountId}")
+	public String postOneAccount (@PathVariable Account account, Long userId){
+
 		userService.saveAccount(account);
-		return "redirect:/";
+		return "redirect:/users/" + userId;
 	}
 
 

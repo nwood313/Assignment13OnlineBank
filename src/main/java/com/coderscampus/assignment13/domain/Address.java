@@ -21,7 +21,7 @@ public class Address {
 		this.userId = userId;
 	}
 	
-	@OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
+	@OneToOne(cascade = CascadeType.PERSIST)
 	@MapsId
 	@JoinColumn(name="user_id")
 	public User getUser() {

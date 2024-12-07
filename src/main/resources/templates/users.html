@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://thymeleaf.org">
 <head>
 	<title>Users</title>
 </head>
@@ -7,67 +7,71 @@
 <h1>Users</h1>
 
 <div th:if="${#lists.size(users) == 1}">
-	<form th:action="@{/users/update}" method="post">
+	<form method="post" th:action="@{/users/{userId}(userId=${user.userId})}">
 		<div>
-			Username: <input type="text" th:field="${user.username}" />
+			Username: <input th:field="${user.username}" type="text"/>
 		</div>
 		<div>
-			Password: <input type="password" th:field="${user.password}" />
+			Password: <input th:field="${user.password}" type="password"/>
 		</div>
 		<div>
-			Full Name: <input type="text" th:field="${user.name}" />
+			Full Name: <input th:field="${user.name}" type="text"/>
 		</div>
 		<hr/>
 		<div>
-			Address Line 1: <input type="text" th:field="${user.address.addressLine1}" />
+			Address Line 1: <input th:field="${address.addressLine1}" type="text"/>
 		</div>
 		<div>
-			Address Line 2: <input type="text" th:field="${user.address.addressLine2}" />
+			Address Line 2: <input th:field="${address.addressLine2}" type="text"/>
 		</div>
 		<div>
-			City: <input type="text" th:field="${user.address.city}" />
+			City: <input th:field="${address.city}" type="text"/>
 		</div>
 		<div>
-			Region: <input type="text" th:field="${user.address.region}" />
+			Region: <input th:field="${address.region}" type="text"/>
 		</div>
 		<div>
-			Country: <input type="text" th:field="${user.address.country}" />
+			Country: <input th:field="${address.country}" type="text"/>
 		</div>
 		<div>
-			Zip Code: <input type="text" th:field="${user.address.zipCode}" />
+			Zip Code: <input th:field="${address.zipCode}" type="text"/>
 		</div>
-		<br>
 		<div>
-			<input type="submit" value="Update User Account" />
+			<input type="submit" value="Update User Account"/>
 		</div>
 	</form>
-	<form th:action="@{/users/{userId}/delete(userId=${user.userId})}" method="post">
-		<input type="submit" value="Delete User Account" />
+	<form method="post" th:action="@{/users/{userId}/delete(userId=${user.userId})}">
+		<input type="submit" value="Delete User Account"/>
 	</form>
 	<hr/>
-	<form th:action="@{/users/{userId}/accounts(userId=${user.userId})}" method="post">
-		<h3>Accounts</h3>
-		<div th:each="account : ${user.accounts}">
-			<a th:href="@{/users/{userId}/accounts/{accountId}(userId=${user.userId},accountId=${account.accountId})}"
-			   th:text="${account.accountName}"></a>
+	<form method="post" th:action="@{/users/{userId}/accounts(userId=${user.userId})}">
+		<div>
+			<Span><b>Accounts</b></Span><br/>
+			<div th:each="account : ${user.accounts}">
+				<a th:href="@{/users/{userId}/accounts/{accountId}(userId=${user.userId}, accountId=${account.accountId})}"
+				   th:if="${account.accountId != null}"><u
+						th:text="${account.accountName}"></u>
+				</a><br/>
+			</div>
+			<button type="submit">Create New Bank Account</button>
+			<br/>
+			<a th:href="@{/users}"><u>Back</u></a>
 		</div>
-		<input style="margin-top: 1em;" type="submit" value="Create New Bank Account"/>
 	</form>
-	<div style="margin-top: 1em;">
-		<a th:href="@{/users}">Back</a>
-	</div>
 </div>
 
-<div th:unless="${#lists.size(users) == 1}" th:each="user : ${users}">
-	<a th:href="@{/users/{userId}(userId=${user.userId})}" th:text="${user.userId}"></a><br/>
+<div th:each="user : ${users}" th:unless="${#lists.size(users) == 1}">
+	<a th:href="@{/users/{userId}(userId=${user.userId})}"><u th:text="${user.userId}"></u></a><br/>
 	<span th:text="${user.username}"></span><br/>
 	<span th:text="${user.name}"></span><br/>
+	<span th:text="${user.password}"></span>
 	<div th:each="account : ${user.accounts}">
-		<a th:href="@{/users/{userId}/accounts/{accountId}(userId=${user.userId},accountId=${account.accountId})}"
-		   th:text="${account.accountName}"></a>
+		<a th:href="@{/users/{userId}/accounts/{accountId}(userId=${user.userId}, accountId=${account.accountId})}"
+		   th:if="${account.accountId != null}"><u
+				th:text="${account.accountName}"></u>
+		</a><br/>
 	</div>
 	<hr/>
 </div>
-
 </body>
 </html>

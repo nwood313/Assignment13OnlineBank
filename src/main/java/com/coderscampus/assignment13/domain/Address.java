@@ -12,7 +12,7 @@ public class Address {
 	private String region;
 	private String country;
 	private String zipCode;
-	
+
 	@Id
 	public Long getUserId() {
 		return userId;
@@ -20,8 +20,8 @@ public class Address {
 	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
-	
-	@OneToOne(cascade = CascadeType.PERSIST)
+
+	@OneToOne
 	@MapsId
 	@JoinColumn(name="user_id")
 	public User getUser() {

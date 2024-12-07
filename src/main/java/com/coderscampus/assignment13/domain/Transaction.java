@@ -19,7 +19,7 @@ public class Transaction {
 	private Double amount;
 	private String type;
 	private Account account;
-	
+
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getTransactionId() {
 		return transactionId;

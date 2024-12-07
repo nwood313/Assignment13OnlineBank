@@ -16,7 +16,7 @@ public class User {
 	private LocalDate createdDate;
 	private List<Account> accounts = new ArrayList<>();
 	private Address address;
-	
+
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getUserId() {
 		return userId;
@@ -42,25 +42,24 @@ public class User {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public LocalDate getCreatedDate() {
 		return createdDate;
 	}
 	public void setCreatedDate(LocalDate createdDate) {
 		this.createdDate = createdDate;
 	}
-	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-
+	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(name = "user_account",
-	           joinColumns = @JoinColumn(name = "user_id"), 
-	           inverseJoinColumns = @JoinColumn(name = "account_id"))
+			joinColumns = @JoinColumn(name = "user_id"),
+			inverseJoinColumns = @JoinColumn(name = "account_id"))
 	public List<Account> getAccounts() {
 		return accounts;
 	}
 	public void setAccounts(List<Account> accounts) {
 		this.accounts = accounts;
 	}
-	@OneToOne(mappedBy = "user")
+	@OneToOne(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
 	public Address getAddress() {
 		return address;
 	}

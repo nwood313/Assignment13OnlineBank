@@ -39,18 +39,18 @@ public class AccountController {
     }
 
     @GetMapping("/users/{userId}/accounts/{accountId}")
-    public String getOneAccount(ModelMap model, @PathVariable Long userId, @PathVariable Long accountId) {
+    public String getAnAccount(ModelMap model, @PathVariable Long userId, @PathVariable Long accountId) {
         User user = userService.findById(userId);
         model.put("user", user);
 
         Account account = userService.findAccountById(accountId);
         model.put("account", account);
 
-        return "account";
+        return "accounts";
     }
 
     @PostMapping("/users/{userId}/accounts/{accountId}")
-    public String postOneAccount(@PathVariable Long accountId, @PathVariable Long userId, @ModelAttribute Account account) {
+    public String postAnAccount(@PathVariable Long accountId, @PathVariable Long userId, @ModelAttribute Account account) {
         User user = userService.findById(userId);
         Account existingAccount = userService.findAccountById(accountId);
         existingAccount.setAccountName(account.getAccountName());
@@ -58,4 +58,5 @@ public class AccountController {
         userService.saveAccount(existingAccount);
         return "redirect:/users/" + userId;
     }
+
 }

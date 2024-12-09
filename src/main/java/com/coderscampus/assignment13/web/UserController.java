@@ -43,10 +43,10 @@ public class UserController {
 
 		model.put("users", users);
 		if (users.size() == 1) {
-			User singleUser = users.iterator().next();
-			model.put("user", singleUser);
+			User oneUser = users.iterator().next();
+			model.put("user", oneUser);
 
-			Address address = singleUser.getAddress();
+			Address address = oneUser.getAddress();
 			if (address == null) {
 				address = new Address();
 			}
@@ -80,7 +80,7 @@ public class UserController {
 	}
 
 	@PostMapping("/users/{userId}")
-	public String postOneUser(@PathVariable Long userId, @ModelAttribute User user, @ModelAttribute Address address) {
+	public String postAUser(@PathVariable Long userId, @ModelAttribute User user, @ModelAttribute Address address) {
 		User existingUser = userService.findById(userId);
 		user.setAccounts(existingUser.getAccounts());
 
@@ -93,11 +93,11 @@ public class UserController {
 		userService.saveUser(user);
 		return "redirect:/users/" + user.getUserId();
 	}
-
 	@PostMapping("/users/{userId}/delete")
-	public String deleteOneUser(@PathVariable Long userId) {
+	public String deleteAUser(@PathVariable Long userId) {
 		userService.delete(userId);
 		return "redirect:/users";
 	}
+
 
 }

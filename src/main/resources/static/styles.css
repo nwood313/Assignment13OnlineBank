@@ -1,0 +1,31 @@
+/* styles.css */
+
+.update-user-data {
+    margin-top: 20px;
+}
+
+.delete-user-button {
+    margin-bottom: 15px;
+}
+.accounts {
+    margin: 15px 0;
+}
+.account-item:not(:last-child) {
+    margin-bottom: 0;
+}
+.back-button {
+    margin-top: 15px;
+}
+html {
+    scroll-behavior: smooth;
+}
+.new-user-button {
+    margin: 20px 0;
+}
+.new-user-button button {
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+

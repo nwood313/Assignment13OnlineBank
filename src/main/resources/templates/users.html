@@ -17,7 +17,9 @@
 				Username: <input th:field="${user.username}" type="text" />
 			</div>
 			<div>
-				Password: <input th:field="${user.password}" type="password" placeholder="********" />
+				<input type="hidden" name="originalPassword" th:value="${user.password}" />
+				Password:
+				<input th:field="${user.password}" type="password" placeholder="******"/>
 			</div>
 
 			<div>

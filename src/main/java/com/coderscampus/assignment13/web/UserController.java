@@ -80,7 +80,7 @@ public class UserController {
 	}
 
 	@PostMapping("/users/{userId}")
-	public String postAUser(@PathVariable Long userId, @ModelAttribute User user, @ModelAttribute Address address) {
+	public String postAUser(@PathVariable Long userId, @ModelAttribute User user, @ModelAttribute Address address, String originalPassword) {
 		User existingUser = userService.findById(userId);
 		user.setAccounts(existingUser.getAccounts());
 
@@ -89,6 +89,9 @@ public class UserController {
 			user.setAddress(address);
 		} else {
 			user.setAddress(existingUser.getAddress());
+		}
+		if (user.getPassword() == null || user.getPassword().isEmpty() || user.getPassword().equals("******")) {
+			user.setPassword(originalPassword);
 		}
 		userService.saveUser(user);
 		return "redirect:/users/" + user.getUserId();

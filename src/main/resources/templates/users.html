@@ -2,10 +2,10 @@
 <html xmlns:th="http://thymeleaf.org">
 <head>
 	<title>Users</title>
-	<!-- Link to the CSS file -->
-	<link rel="stylesheet" href="/styles.css">
+	<link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
+<div class="users-form">
 <h1>Users</h1>
 
 <div id="top"></div>
@@ -13,15 +13,14 @@
 <div th:if="${#lists.size(users) == 1}">
 	<form method="post" th:action="@{/users/{userId}(userId=${user.userId})}">
 		<div>
-		<div>
+			<div>
 				Username: <input th:field="${user.username}" type="text" />
 			</div>
 			<div>
 				<input type="hidden" name="originalPassword" th:value="${user.password}" />
 				Password:
-				<input th:field="${user.password}" type="password" placeholder="******"/>
+				<input th:field="${user.password}" type="password" placeholder="******" />
 			</div>
-
 			<div>
 				Full Name: <input th:field="${user.name}" type="text" />
 			</div>
@@ -56,18 +55,16 @@
 	</form>
 	<hr />
 	<form method="post" th:action="@{/users/{userId}/accounts(userId=${user.userId})}">
-		<div>
-			<span><b>Accounts</b></span><br />
-			<div class="accounts">
-				<div th:each="account : ${user.accounts}" class="account-item">
-					<a th:href="@{/users/{userId}/accounts/{accountId}(userId=${user.userId}, accountId=${account.accountId})}"
-					   th:if="${account.accountId != null}">
-						<u th:text="${account.accountName}"></u>
-					</a>
-				</div>
+		<span><b>Accounts</b></span><br />
+		<div class="accounts-section">
+			<div th:each="account : ${user.accounts}" class="account-item">
+				<a th:href="@{/users/{userId}/accounts/{accountId}(userId=${user.userId}, accountId=${account.accountId})}"
+				   th:if="${account.accountId != null}">
+					<u th:text="${account.accountName}"></u>
+				</a>
 			</div>
 		</div>
-		<div>
+		<div class="create-bank-account">
 			<button type="submit">Create New Bank Account</button>
 		</div>
 	</form>
@@ -88,14 +85,14 @@
 		</a><br />
 	</div>
 	<hr />
-
 </div>
+
 <div class="new-user-button">
 	<a href="/register">
 		<button>Create New User</button>
 	</a>
 </div>
 <button onclick="window.scrollTo(0, 0);">Back to Top</button>
-
+</div>
 </body>
 </html>

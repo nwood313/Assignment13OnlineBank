@@ -1,4 +1,7 @@
 /* styles.css */
+.user-form {
+
+}
 
 .update-user-data {
     margin-top: 20px;
@@ -8,7 +11,7 @@
     margin-bottom: 15px;
 }
 .accounts {
-    margin: 15px 0;
+    margin: 20px 0;
 }
 .account-item:not(:last-child) {
     margin-bottom: 0;
@@ -27,5 +30,14 @@ html {
     font-size: 16px;
     cursor: pointer;
 }
+.create-bank-account {
+    margin-top: 20px;
+}
+.accounts-section {
+    margin: 10px 0;
+}
+
+
+
 
 

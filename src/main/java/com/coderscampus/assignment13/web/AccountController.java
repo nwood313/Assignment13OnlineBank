@@ -14,13 +14,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import java.util.Collections;
 
 
-
 @Controller
 
 public class AccountController {
     @Autowired
     private UserService userService;
-    
+
     @PostMapping("/users/{userId}/accounts")
     public String postNewAccount(@PathVariable Long userId, @ModelAttribute Account account) {
         if (account.getAccountId() != null) {
@@ -34,7 +33,7 @@ public class AccountController {
         }
 
         Account newAccount = userService.saveAccount(account);
-        
+
         return "redirect:/users/" + userId + "/accounts/" + newAccount.getAccountId();
     }
 
